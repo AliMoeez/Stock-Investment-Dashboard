@@ -1,7 +1,3 @@
-word="x"
+from Data.dataset import DataFrames
 
-q="O"
-
-w=word+q
-
-print(w)
+historical_data=DataFrames.stock_historical_data()

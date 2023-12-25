@@ -13,9 +13,7 @@ class DataFrames:
         sheet_name="StockHistoricalData"
         url=f"https://docs.google.com/spreadsheets/d/1W6n_aDhthFVHLmUQ762NaCWa-nvRRxQjFqe5zhxUzAk/gviz/tq?tqx=out:csv&sheet={sheet_name}"
         df=pd.read_csv(url)
-        print(df)
         df_new=df.drop([0,1])
-        print(df_new)
         return df
 
     stock_historical_data()
