@@ -1,5 +1,5 @@
 import dash
-from dash import Dash,html,dash_table,dcc,Input,Output,callback
+from dash import Dash,html,dash_table,dcc,Input,Output,State, callback
 import dash_bootstrap_components as dbc
 import plotly.express as px
 
@@ -10,10 +10,20 @@ historical_data=DataFrames.stock_historical_data()
 
 historical_data_options_list=list(historical_data.columns.values)
 
-
 external_stylesheets=[dbc.themes.BOOTSTRAP]
 
 dash.register_page(__name__,path="/",external_stylesheets=external_stylesheets)
+
+@callback(
+        Output("STOCKGRAPH","figure"),
+        Input("STOCKID","value"),
+        State("STOCKID","value")
+)
+
+def graph(ticker,company_and_ticker):
+    stock_graph=px.line(historical_data,x="Date Date",y=ticker)
+    return stock_graph
+
 
 layout=html.Div([
 
@@ -23,7 +33,7 @@ layout=html.Div([
 
     dbc.Row([
         dbc.Col([
-            dcc.Dropdown(id="STOCKID",options=historical_data_options_list),
+            dcc.Dropdown(id="STOCKID",options=historical_data_options_list,value=historical_data_options_list[1]),
             dcc.Graph(id="STOCKGRAPH"),
         
         ]),
@@ -94,14 +104,3 @@ layout=html.Div([
     ]),
 
 ])
-
-@callback(
-        Output("STOCKGRAPH","figure"),
-        Input("STOCKID","value")
-)
-
-def graph(ticker):
-    stock_graph=px.line(historical_data,x="Date Date",y=ticker)
-    return stock_graph
-
-
