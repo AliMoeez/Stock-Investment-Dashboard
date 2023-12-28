@@ -12,18 +12,7 @@ historical_data_options_list=list(historical_data.columns.values)
 
 external_stylesheets=[dbc.themes.BOOTSTRAP]
 
-ticker=None
-
 dash.register_page(__name__,path="/",external_stylesheets=external_stylesheets)
-
-@callback(
-        Output("STOCKGRAPH","figure"),
-        Input("STOCKID","value"),
-)
-
-def graph(ticker):
-    stock_graph=px.line(historical_data,x="Date Date",y=ticker)
-    return stock_graph
 
 layout=html.Div([
 
@@ -33,6 +22,7 @@ layout=html.Div([
         dbc.Col([
             dcc.Dropdown(id="STOCKID",options=historical_data_options_list,value=historical_data_options_list[1]),
             dcc.Graph(id="STOCKGRAPH"),
+            dcc.Store(id="STOCKSTOREID")
         
         ]),
     
@@ -102,3 +92,21 @@ layout=html.Div([
     ]),
 
 ])
+
+
+@callback(
+        Output("STOCKGRAPH","figure"),
+        Input("STOCKID","value"),
+)
+
+def graph(ticker):
+    stock_graph=px.line(historical_data,x="Date Date",y=ticker)
+    return stock_graph
+
+@callback(
+        Output("STOCKSTOREID","data"),
+        Input("STOCKID","value")
+)
+
+def graph_index(ticker):
+    return ticker
