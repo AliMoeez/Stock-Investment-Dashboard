@@ -25,8 +25,6 @@ def graph(ticker):
     stock_graph=px.line(historical_data,x="Date Date",y=ticker)
     return stock_graph
 
-
-
 layout=html.Div([
 
     html.H2("Home"),
