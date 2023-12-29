@@ -33,7 +33,7 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     html.H2("Price"),
-                    html.H3("TEXT 1")
+                    html.H3(id="price-company")
                 ])
             ),
             dbc.Card(
@@ -93,20 +93,18 @@ layout=html.Div([
 
 ])
 
-
 @callback(
         Output("STOCKGRAPH","figure"),
+        Output("price-company","children"),
         Input("STOCKID","value"),
+
 )
 
 def graph(ticker):
     stock_graph=px.line(historical_data,x="Date Date",y=ticker)
-    return stock_graph
+    
+    company_df=current_data.loc[current_data["Company & Ticker"]==ticker]
+    
+    price_company=company_df["Price"]
 
-@callback(
-        Output("STOCKSTOREID","data"),
-        Input("STOCKID","value")
-)
-
-def graph_index(ticker):
-    return ticker
+    return stock_graph,price_company
