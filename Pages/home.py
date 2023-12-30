@@ -9,6 +9,7 @@ current_data=DataFrames.stock_current_data()
 historical_data=DataFrames.stock_historical_data()
 
 historical_data_options_list=list(historical_data.columns.values)
+historical_data_options_list=historical_data_options_list[1:]
 
 external_stylesheets=[dbc.themes.BOOTSTRAP]
 
@@ -32,60 +33,60 @@ layout=html.Div([
         dbc.Col([
             dbc.Card(
                 dbc.CardBody([
-                    html.H2("Price"),
-                    html.H3(id="price-company")
+                    html.H2("Price",style={"textAlign":"center"}),
+                    html.H3(id="price-company",style={"textAlign":"center"})
                 ])
             ),
             dbc.Card(
                 dbc.CardBody([
-                    html.H2("High"),
-                    html.H3("TEXT 2")
+                    html.H2("High",style={"textAlign":"center"}),
+                    html.H3(id="high-company",style={"textAlign":"center"})
                 ])
             ),
             dbc.Card(
                 dbc.CardBody([
-                    html.H2("EPS"),
-                    html.H3("TEXT 3")
-                ])
-            ),
-        ]),
-        dbc.Col([
-            dbc.Card(
-                dbc.CardBody([
-                    html.H2("Open"),
-                    html.H3("TEXT 4")
-                ])
-            ),
-            dbc.Card(
-                dbc.CardBody([
-                    html.H2("Low"),
-                    html.H3("TEXT 5")
-                ])
-            ),
-            dbc.Card(
-                dbc.CardBody([
-                    html.H2("Daily Trading Volume"),
-                    html.H3("TEXT 6")
+                    html.H2("EPS",style={"textAlign":"center"}),
+                    html.H3(id="eps-company",style={"textAlign":"center"})
                 ])
             ),
         ]),
         dbc.Col([
             dbc.Card(
                 dbc.CardBody([
-                    html.H2("Close"),
-                    html.H3("TEXT 7")
+                    html.H2("Open",style={"textAlign":"center"}),
+                    html.H3(id="open-company",style={"textAlign":"center"})
                 ])
             ),
             dbc.Card(
                 dbc.CardBody([
-                    html.H2("P/E"),
-                    html.H3("TEXT 8")
+                    html.H2("Low",style={"textAlign":"center"}),
+                    html.H3(id="low-company",style={"textAlign":"center"})
                 ])
             ),
             dbc.Card(
                 dbc.CardBody([
-                    html.H2("Market Capitalization"),
-                    html.H3("TEXT 9")
+                    html.H2("Beta",style={"textAlign":"center"}),
+                    html.H3(id="beta-company",style={"textAlign":"center"})
+                ])
+            ),
+        ]),
+        dbc.Col([
+            dbc.Card(
+                dbc.CardBody([
+                    html.H2("Close",style={"textAlign":"center"}),
+                    html.H3(id="close-company",style={"textAlign":"center"})
+                ])
+            ),
+            dbc.Card(
+                dbc.CardBody([
+                    html.H2("P/E",style={"textAlign":"center"}),
+                    html.H3(id="pe-company",style={"textAlign":"center"})
+                ])
+            ),
+            dbc.Card(
+                dbc.CardBody([
+                    html.H2("Market Capitalization",style={"textAlign":"center"}),
+                    html.H3(id="market-company",style={"textAlign":"center"})
                 ])
             ),
         ]),
@@ -96,15 +97,34 @@ layout=html.Div([
 @callback(
         Output("STOCKGRAPH","figure"),
         Output("price-company","children"),
+        Output("high-company","children"),
+        Output("eps-company","children"),
+        Output("open-company","children"),
+        Output("low-company","children"),
+        Output("beta-company","children"),
+        Output("close-company","children"),
+        Output("pe-company","children"),
+        Output("market-company","children"),
         Input("STOCKID","value"),
 
 )
 
 def graph(ticker):
     stock_graph=px.line(historical_data,x="Date Date",y=ticker)
+    stock_graph.update_xaxes(title_text="Date")
     
     company_df=current_data.loc[current_data["Company & Ticker"]==ticker]
     
-    price_company=company_df["Price"]
+    price_company=f'${company_df["Price"][1]}'
 
-    return stock_graph,price_company
+
+    high_company=f'${company_df["High"][1]}'
+    eps_company=f'${company_df["EPS"][1]}'
+    open_company=f'${company_df["Open"][1]}'
+    low_company=f'${company_df["Low"][1]}'
+    beta_company=company_df["Beta"]
+    close_company=f'${company_df["Closing Price Yesterday"][1]}'
+    pe_company=company_df["P/E"]
+    market_company=f'${company_df["Market Capitalization"][1]:,}'
+
+    return stock_graph,price_company,high_company,eps_company,open_company,low_company,beta_company,close_company,pe_company,market_company

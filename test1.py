@@ -10,4 +10,9 @@ choice="Amazon AMZN"
 
 df1=current_data.loc[current_data["Company & Ticker"]==choice]
 
-print(df1["Number of Shares"])
+print(df1["Open"][0])
+
+
+print(f'${df1["Open"][0]}')
+
+f'${company_df["Price"][0]}'
