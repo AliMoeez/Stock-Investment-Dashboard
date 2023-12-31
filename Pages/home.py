@@ -85,8 +85,8 @@ layout=html.Div([
             ),
             dbc.Card(
                 dbc.CardBody([
-                    html.H2("Market Capitalization",style={"textAlign":"center"}),
-                    html.H3(id="market-company",style={"textAlign":"center"})
+                    html.H2("Sector",style={"textAlign":"center"}),
+                    html.H3(id="sector-company",style={"textAlign":"center"})
                 ])
             ),
         ]),
@@ -104,7 +104,7 @@ layout=html.Div([
         Output("beta-company","children"),
         Output("close-company","children"),
         Output("pe-company","children"),
-        Output("market-company","children"),
+        Output("sector-company","children"),
         Input("STOCKID","value"),
 
 )
@@ -114,17 +114,17 @@ def graph(ticker):
     stock_graph.update_xaxes(title_text="Date")
     
     company_df=current_data.loc[current_data["Company & Ticker"]==ticker]
-    
-    price_company=f'${company_df["Price"][1]}'
 
-
-    high_company=f'${company_df["High"][1]}'
-    eps_company=f'${company_df["EPS"][1]}'
-    open_company=f'${company_df["Open"][1]}'
-    low_company=f'${company_df["Low"][1]}'
+    price_company=company_df["Price"]
+    high_company=company_df["High"]
+    price_company=company_df["Price"]
+    high_company=company_df["High"]
+    eps_company=company_df["EPS"]
+    open_company=company_df["Open"]
+    low_company=company_df["Low"]
     beta_company=company_df["Beta"]
-    close_company=f'${company_df["Closing Price Yesterday"][1]}'
+    close_company=company_df["Closing Price Yesterday"]
     pe_company=company_df["P/E"]
-    market_company=f'${company_df["Market Capitalization"][1]:,}'
+    market_company=company_df["Sector"]
 
-    return stock_graph,price_company,high_company,eps_company,open_company,low_company,beta_company,close_company,pe_company,market_company
+    return stock_graph,price_company,high_company, eps_company,open_company,low_company,beta_company,close_company,pe_company,market_company

@@ -1,4 +1,5 @@
 import pandas as pd 
+pd.set_option('display.max_columns',None)
 
 class DataFrames:
     def stock_current_data():
@@ -7,7 +8,6 @@ class DataFrames:
         df=pd.read_csv(url)
         return df
 
-    stock_current_data()
 
     def stock_historical_data():
         sheet_name="StockHistoricalData"
@@ -16,5 +16,5 @@ class DataFrames:
         df_new=df.drop([0,1])
         return df
 
-    stock_historical_data()
+
 
