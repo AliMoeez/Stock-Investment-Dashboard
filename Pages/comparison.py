@@ -21,11 +21,10 @@ layout=html.Div([
     html.H2("Comparsion Page"),
 
     dbc.Row([
-        
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
-                    dcc.Dropdown(id="STOCKIDONE",options=historical_data_options_list,value=historical_data_options_list[0],multi=True)
+                    dcc.Dropdown(id="STOCK_IDS",options=historical_data_options_list,value=historical_data_options_list[0],multi=True)
                 ])
             )
         ),
@@ -35,22 +34,72 @@ layout=html.Div([
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
-                    dcc.Graph(id="STOCKONETWOGRPAH")
+                    dcc.Graph(id="STOCKGRAPHTOTAL")
                 ])
             )
         )
+    ]),
+
+    dbc.Row([
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H3(id="STOCKONENAME"),
+                ])
+            )
+        ),
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H2(""),
+                ])
+            )
+        ),
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H2(""),
+                ])
+            )
+        ),
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H2(""),
+                ])
+            )
+        ),
     ])
+
+
 
 
 ])
 
 @callback(
-   Output("STOCKIDONE","value"),
-   Input("STOCKIDONE","value"),
-   State("STOCKIDONE","value")     
+   Output("STOCK_IDS","value"),
+   Input("STOCK_IDS","value"),
+   State("STOCK_IDS","value"), 
 )
 
 def max_dropdown_values(selection,current):
     if len(selection)>4:
         return current[:-1]
     return selection
+
+
+@callback(
+    Output("STOCKGRAPHTOTAL","figure"),
+    Output("STOCKONENAME","value"),
+    #"""    Output("STOCKTWONAME","value"),
+    #Output("STOCKTHREENAME","value"),
+    #Output("STOCKFOURNAME","value"),"""
+    Input("STOCK_IDS","value"),
+    
+)
+def figure_stocks(ticker):
+    stock_graph=px.line(historical_data,x="Date Date",y=ticker)
+
+    stock_one_label=ticker
+
+    return stock_graph,stock_one_label
