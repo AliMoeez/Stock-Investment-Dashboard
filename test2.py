@@ -1,11 +1,5 @@
+x="STR"
+y=["STR IN LIST 1","STE IN LIST 2"]
 
-list=[]
-
-def func(y):
-    global list
-    y=2
-    x=y
-    list.append(x)
-
-print(list,"VAL OF X")
-
+if type(y) is not list:
+    print(x)

@@ -117,8 +117,6 @@ def graph(ticker):
 
     price_company=company_df["Price"]
     high_company=company_df["High"]
-    price_company=company_df["Price"]
-    high_company=company_df["High"]
     eps_company=company_df["EPS"]
     open_company=company_df["Open"]
     low_company=company_df["Low"]

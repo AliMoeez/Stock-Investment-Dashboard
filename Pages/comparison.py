@@ -51,21 +51,21 @@ layout=html.Div([
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
-                    html.H2(""),
+                    html.H2(id="STOCKTWONAME"),
                 ])
             )
         ),
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
-                    html.H2(""),
+                    html.H2(id="STOCKTHREENAME"),
                 ])
             )
         ),
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
-                    html.H2(""),
+                    html.H2(id="STOCKFOURNAME"),
                 ])
             )
         ),
@@ -76,7 +76,7 @@ layout=html.Div([
 
 ])
 
-@callback(
+"""@callback(
    Output("STOCK_IDS","value"),
    Input("STOCK_IDS","value"),
    State("STOCK_IDS","value"), 
@@ -85,21 +85,37 @@ layout=html.Div([
 def max_dropdown_values(selection,current):
     if len(selection)>4:
         return current[:-1]
-    return selection
-
+    return selection"""
 
 @callback(
     Output("STOCKGRAPHTOTAL","figure"),
-    Output("STOCKONENAME","value"),
-    #"""    Output("STOCKTWONAME","value"),
-    #Output("STOCKTHREENAME","value"),
-    #Output("STOCKFOURNAME","value"),"""
+    
+    Output("STOCKONENAME","children"),
+    Output("STOCKTWONAME","children"),
+    Output("STOCKTHREENAME","children"),
+    Output("STOCKFOURNAME","children"),
+ 
     Input("STOCK_IDS","value"),
     
 )
 def figure_stocks(ticker):
     stock_graph=px.line(historical_data,x="Date Date",y=ticker)
 
-    stock_one_label=ticker
+    if type(ticker) is not list and type(ticker) is not None:
+        stock_one_label=ticker       
+        stock_two_label="" ; stock_three_label="" ; stock_four_label=""
 
-    return stock_graph,stock_one_label
+    if type(ticker) is None:
+        stock_one_label="LABELTEST1" ; stock_two_label="" ; stock_three_label="" ; stock_four_label=""
+    
+    if type(ticker) is list:
+        if len(ticker)==1:
+            stock_one_label=ticker[0] ; stock_two_label=""; stock_three_label="" ; stock_four_label=""
+        if len(ticker)==2:
+            stock_one_label=ticker[0] ; stock_two_label=ticker[1] ; stock_three_label="" ; stock_four_label=""
+        if len(ticker)==3:
+            stock_one_label=ticker[0] ; stock_two_label=ticker[1] ; stock_three_label=ticker[2] ; stock_four_label=""
+        if len(ticker)==4:
+            stock_one_label=ticker[0] ; stock_two_label=ticker[1] ; stock_three_label=ticker[2] ; stock_four_label=ticker[3]
+
+    return stock_graph,stock_one_label,stock_two_label,stock_three_label,stock_four_label
