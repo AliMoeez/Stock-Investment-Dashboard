@@ -126,3 +126,4 @@ def graph(ticker):
     market_company=company_df["Sector"]
 
     return stock_graph,price_company,high_company, eps_company,open_company,low_company,beta_company,close_company,pe_company,market_company
+
