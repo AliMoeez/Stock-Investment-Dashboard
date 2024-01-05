@@ -249,7 +249,7 @@ layout=html.Div([
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
-                    html.H3(id="STOCKFORUBETA")
+                    html.H3(id="STOCKFOURBETA")
                 ])
             )
         ),
@@ -290,6 +290,20 @@ def max_dropdown_values(selection,current):
     Output("STOCKFOURPRICE","children"),
 
 
+    Output("STOCKONEP/E","children"),
+    Output("STOCKTWOP/E","children"),
+    Output("STOCKTHREEP/E","children"),
+    Output("STOCKFOURP/E","children"),
+
+    Output("STOCKONEEPS","children"),
+    Output("STOCKTWOEPS","children"),
+    Output("STOCKTHREEEPS","children"),
+    Output("STOCKFOUREPS","children"),
+
+    Output("STOCKONEBETA","children"),
+    Output("STOCKTWOBETA","children"),
+    Output("STOCKTHREEBETA","children"),
+    Output("STOCKFOURBETA","children"),
 
  
     Input("STOCK_IDS","value"),
@@ -303,11 +317,10 @@ def figure_stocks(ticker):
         stock_two_label="" ; stock_three_label="" ; stock_four_label=""
         company_df_1=current_data.loc[current_data["Company & Ticker"]==ticker]
         
-        stock_one_price=company_df_1["Price"]
-        stock_two_price=""
-        stock_three_price=""
-        stock_four_price=""
-
+        stock_one_price=company_df_1["Price"] ; stock_two_price="" ; stock_three_price="" ; stock_four_price=""
+        stock_one_pe=company_df_1["P/E"] ; stock_two_pe="" ; stock_three_pe="" ; stock_four_pe=""
+        stock_one_eps=company_df_1["EPS"] ; stock_two_eps="" ; stock_three_eps="" ; stock_four_eps=""
+        stock_one_beta=company_df_1["Beta"] ; stock_two_beta="" ; stock_three_beta="" ; stock_four_beta=""
 
     if type(ticker) is None:
         stock_one_label="LABELTEST1" ; stock_two_label="" ; stock_three_label="" ; stock_four_label=""
@@ -317,48 +330,40 @@ def figure_stocks(ticker):
             stock_one_label=ticker[0] ; stock_two_label=""; stock_three_label="" ; stock_four_label=""
             company_df_1=current_data.loc[current_data["Company & Ticker"]==ticker[0]]
 
-            stock_one_price=company_df_1["Price"]
-            stock_two_price=""
-            stock_three_price=""
-            stock_four_price=""
+            stock_one_price=company_df_1["Price"] ; stock_two_price="" ; stock_three_price="" ; stock_four_price=""
+            stock_one_pe=company_df_1["P/E"] ; stock_two_pe="" ; stock_three_pe="" ; stock_four_pe=""
+            stock_one_pe=company_df_1["EPS"] ; stock_two_eps="" ; stock_three_eps="" ; stock_four_eps=""
+            stock_one_beta=company_df_1["Beta"] ;stock_two_beta="" ;stock_three_beta="" ; stock_four_beta=""
         
-
-
         if len(ticker)==2:
             stock_one_label=ticker[0] ; stock_two_label=ticker[1] ; stock_three_label="" ; stock_four_label=""
-            company_df_1=current_data.loc[current_data["Company & Ticker"]==ticker[0]]
-            company_df_2=current_data.loc[current_data["Company & Ticker"]==ticker[1]]
+            company_df_1=current_data.loc[current_data["Company & Ticker"]==ticker[0]] ; company_df_2=current_data.loc[current_data["Company & Ticker"]==ticker[1]]
 
-            stock_one_price=company_df_1["Price"]
-            stock_two_price=company_df_2["Price"]
-            stock_three_price=""
-            stock_four_price=""
-        
+            stock_one_price=company_df_1["Price"] ; stock_two_price=company_df_2["Price"] ; stock_three_price="" ; stock_four_price=""
+            stock_one_pe=company_df_1["P/E"] ; stock_two_pe=company_df_2["P/E"] ; stock_three_pe="" ; stock_four_pe=""
+            stock_one_eps=company_df_1["EPS"] ; stock_two_eps=company_df_2["EPS"] ; stock_three_eps="" ; stock_four_eps=""
+            stock_one_beta=company_df_1["Beta"] ; stock_two_beta=company_df_2["Beta"] ; stock_three_beta="" ; stock_four_beta=""
         
         if len(ticker)==3:
             stock_one_label=ticker[0] ; stock_two_label=ticker[1] ; stock_three_label=ticker[2] ; stock_four_label=""
-            company_df_1=current_data.loc[current_data["Company & Ticker"]==ticker[0]]
-            company_df_2=current_data.loc[current_data["Company & Ticker"]==ticker[1]]
-            company_df_3=current_data.loc[current_data["Company & Ticker"]==ticker[2]]
+            company_df_1=current_data.loc[current_data["Company & Ticker"]==ticker[0]] ; company_df_2=current_data.loc[current_data["Company & Ticker"]==ticker[1]] ; company_df_3=current_data.loc[current_data["Company & Ticker"]==ticker[2]]
 
-            stock_one_price=company_df_1["Price"]
-            stock_two_price=company_df_2["Price"]
-            stock_three_price=company_df_3["Price"]
-            stock_two_price=""
-  
-        
-        
+            stock_one_price=company_df_1["Price"] ; stock_two_price=company_df_2["Price"] ;stock_three_price=company_df_3["Price"] ; stock_four_price=""
+            stock_one_pe=company_df_1["P/E"] ; stock_two_pe=company_df_2["P/E"] ; stock_three_pe=company_df_3["P/E"] ; stock_four_pe=""
+            stock_one_eps=company_df_1["EPS"] ; stock_two_eps=company_df_2["EPS"] ; stock_three_eps=company_df_3["EPS"] ; stock_four_eps=""
+            stock_one_beta=company_df_1["Beta"] ; stock_two_beta=company_df_2["Beta"] ; stock_three_beta=company_df_3["Beta"] ; stock_four_beta=""
+    
         if len(ticker)==4:
             stock_one_label=ticker[0] ; stock_two_label=ticker[1] ; stock_three_label=ticker[2] ; stock_four_label=ticker[3]
-            company_df_1=current_data.loc[current_data["Company & Ticker"]==ticker[0]]
-            company_df_2=current_data.loc[current_data["Company & Ticker"]==ticker[1]]
-            company_df_3=current_data.loc[current_data["Company & Ticker"]==ticker[2]]
-            company_df_4=current_data.loc[current_data["Company & Ticker"]==ticker[3]]
+            company_df_1=current_data.loc[current_data["Company & Ticker"]==ticker[0]] ;company_df_2=current_data.loc[current_data["Company & Ticker"]==ticker[1]] ; company_df_3=current_data.loc[current_data["Company & Ticker"]==ticker[2]] ; company_df_4=current_data.loc[current_data["Company & Ticker"]==ticker[3]]
 
-            stock_one_price=company_df_1["Price"]
-            stock_two_price=company_df_2["Price"]
-            stock_three_price=company_df_3["Price"]
-            stock_four_price=company_df_4["Price"]
+            stock_one_price=company_df_1["Price"] ; stock_two_price=company_df_2["Price"] ; stock_three_price=company_df_3["Price"] ; stock_four_price=company_df_4["Price"]
+            stock_one_pe=company_df_1["P/E"] ;stock_two_pe=company_df_2["P/E"] ; stock_three_pe=company_df_3["P/E"] ; stock_four_pe=company_df_4["P/E"]
+            stock_one_eps=company_df_1["EPS"] ; stock_two_eps=company_df_2["EPS"] ; stock_three_eps=company_df_3["EPS"] ; stock_four_eps=company_df_4["EPS"]
+            stock_one_beta=company_df_1["Beta"] ; stock_two_beta=company_df_2["Beta"] ; stock_three_beta=company_df_3["Beta"] ; stock_four_beta=company_df_4["Beta"]
 
     return (stock_graph,stock_one_label,stock_two_label,stock_three_label,stock_four_label,
-            stock_one_price,stock_two_price,stock_three_price,stock_four_price)
+            stock_one_price,stock_two_price,stock_three_price,stock_four_price,
+            stock_one_pe,stock_two_pe,stock_three_pe,stock_four_pe,
+            stock_one_eps,stock_two_eps,stock_three_eps,stock_four_eps,
+            stock_one_beta,stock_two_beta,stock_three_beta,stock_four_beta)
