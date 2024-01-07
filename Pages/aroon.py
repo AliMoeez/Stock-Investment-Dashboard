@@ -52,14 +52,18 @@ layout=html.Div([
 )
 
 def aroon_graph(ticker):
-    aroon_function=Aroon.aroon_function(ticker,25)
+    aroon_function=Aroon.aroon_function(ticker,0,25,historical_data[ticker])
     aroon_up_function=aroon_function[0]
     aroon_down_function=aroon_function[1]
 
     aroon_figure=px.line(historical_data,x="Date Date",y=ticker)
 
     aroon_up_figure=px.line(aroon_up_function,x=aroon_up_function.index,y=aroon_up_function["Aroon Up"])
+    aroon_up_figure.update_traces(line_color="green")
+    
     aroon_down_figure=px.line(aroon_down_function,x=aroon_down_function.index,y=aroon_down_function["Aroon Down"])
+    aroon_down_figure.update_traces(line_color="red")
+
     aroon_trend_figure=go.Figure(data=aroon_up_figure.data+aroon_down_figure.data)
 
     return aroon_figure,aroon_trend_figure
