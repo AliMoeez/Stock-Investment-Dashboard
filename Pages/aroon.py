@@ -57,13 +57,16 @@ def aroon_graph(ticker):
     aroon_down_function=aroon_function[1]
 
     aroon_figure=px.line(historical_data,x="Date Date",y=ticker)
+    aroon_figure.update_xaxes(visible=False)
+    aroon_figure.update_layout(margin=dict(b=10))
 
-    aroon_up_figure=px.line(aroon_up_function,x=aroon_up_function.index,y=aroon_up_function["Aroon Up"])
+    aroon_up_figure=px.line(aroon_up_function,x=aroon_up_function["Date"],y=aroon_up_function["Aroon Up"])
     aroon_up_figure.update_traces(line_color="green")
     
-    aroon_down_figure=px.line(aroon_down_function,x=aroon_down_function.index,y=aroon_down_function["Aroon Down"])
+    aroon_down_figure=px.line(aroon_down_function,x=aroon_down_function["Date"],y=aroon_down_function["Aroon Down"])
     aroon_down_figure.update_traces(line_color="red")
 
     aroon_trend_figure=go.Figure(data=aroon_up_figure.data+aroon_down_figure.data)
+    aroon_trend_figure.update_layout(height=150,margin=dict(t=10))
 
     return aroon_figure,aroon_trend_figure

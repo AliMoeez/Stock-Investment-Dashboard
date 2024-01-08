@@ -8,42 +8,53 @@ current_data=DataFrames.stock_current_data()
 
 ticker="Amazon AMZN"
 
-"""def split_data_set(ticker,lookback):
+def split_data_set(ticker,lookback,max_lookback):
     data=historical_data[ticker]
     data_list=data.values.tolist()
-    data_list=data_list[::-1]
-    list_data=[data_list[i:i+lookback] for i in range(0,len(data_list),lookback)]
-    return list_data"""
+    return data_list[::-1]
 
-def aroon_function(ticker,lookback):
+def aroon_function(ticker,lookback,max_lookback):
     aroon_up_list=[] ; aroon_down_list=[]
-   # data_split_function=split_data_set(ticker,lookback)    
+    data_split_function=split_data_set(ticker,lookback,max_lookback)
     
-    
+    lookback_list=[]
     
     for i,y in enumerate(data_split_function):
-        
-        print(y)
-        days_from_max=lookback-y.index(np.max(y)) ; days_from_min=lookback-y.index(np.min(y))
+        lookback_list.append(data_split_function[lookback:max_lookback])
 
-        print(days_from_max)
+        lookback+=1
+        max_lookback+=1
+
+  #  print(lookback_list)
+
+            
+    for i,y in enumerate(lookback_list):
+
+      #  print(y,np.max(y),y.index(np.max(y)),25-y.index(np.max(y)))
+
+
+        days_from_max=y.index(np.max(y)) ; days_from_min=y.index(np.min(y))
+
         
         
+        aroon_up=((25-days_from_max)/25)*100 ; aroon_down=((25-days_from_min)/25)*100
+
+      #  print(aroon_up)
         
-        aroon_up=((lookback-days_from_max)/lookback)*100 
-        aroon_down=((lookback-days_from_min)/lookback)*100
+        
         
         
         aroon_up_list.append(aroon_up) ; aroon_down_list.append(aroon_down)
-        
-        aroon_up_array=pd.DataFrame(data={"Aroon Up":aroon_up_list[::-1]})
-        aroon_down_array=pd.DataFrame(data={"Aroon Down":aroon_down_list[::-1]})
+
+        if len(aroon_up_list)==len(historical_data["Date Date"]):
+            aroon_up_array=pd.DataFrame(data={"Date":historical_data["Date Date"],"Aroon Up":aroon_up_list[::-1]})
+            aroon_down_array=pd.DataFrame(data={"Date":historical_data["Date Date"],"Aroon Down":aroon_down_list[::-1]})
     
-    return aroon_up_array,aroon_down_array
+    
+    return aroon_up_array[::-1],aroon_down_array[::-1]
 
-au=aroon_function(ticker,25)[0]
-ad=aroon_function(ticker,25)[1]
-
+au=aroon_function(ticker,0,25)[0]
+ad=aroon_function(ticker,0,25)[1]
 
 print(au)
 
