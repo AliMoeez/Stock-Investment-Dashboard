@@ -1,19 +1,12 @@
-list=[]
 
-for i in range(0,100):
-    list.append(i)
 
-def func(max_lookback,list,lookback):
-    list=list[::-1]
-    lb_list=[]
-    for i in list:
-        lb_list.append(list[lookback:max_lookback])
-        lookback+=1
-        max_lookback+=1
-    return lb_list[::-1]
+def func():
+    print("HERE")
+    def func_2():
+        print("HEREWEE")
 
-z=func(25,list,0)
+    func_2()
 
-print(z)
 
+func()
 
