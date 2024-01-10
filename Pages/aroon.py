@@ -48,7 +48,12 @@ layout=html.Div([
 @callback(
     Output("STOCK_AROON_GRAPH","figure"),
     Output("STOCK_AROON_TREND_GRAPH","figure"),
-    Input("STOCK_AROON_DROPDOWN","value")
+    
+
+    
+    Input("STOCK_AROON_DROPDOWN","value"),
+
+
 )
 
 def aroon_graph(ticker):
@@ -67,7 +72,7 @@ def aroon_graph(ticker):
     aroon_down_figure.update_traces(line_color="red")
 
     aroon_trend_figure=go.Figure(data=aroon_up_figure.data+aroon_down_figure.data)
-    aroon_trend_figure.update_layout(height=150,margin=dict(t=10))
+    aroon_trend_figure.update_layout(margin=dict(t=10),height=300)
 
     """
     aroon_figure.update_xaxes(
@@ -91,25 +96,4 @@ def aroon_graph(ticker):
     '''y_axis=dict(range=aroon_figure['layout']['yaxis']['range'])
     )'''
 
-   # aroon_trend_figure.on_relayout(update_both_plots(aroon_trend_figure,aroon_figure))
-   # aroon_function.on_relayout(update_both_plots(aroon_trend_figure,aroon_figure))
-
-   # aroon_figure.on_relayout(aroon_graph,aroon_trend_figure)
-   # aroon_trend_figure.on_relayout(aroon_graph,aroon_figure)
-
     return aroon_figure,aroon_trend_figure
-
-@callback(
-    Output("STOCK_AROON_GRAPH","relayoutData"),
-    Output("STOCK_AROON_TREND_GRAPH","relayoutData"),
-    Input("STOCK_AROON_GRAPH","relayoutData"),
-    Input("STOCK_AROON_TREND_GRAPH","relayoutData")
-)
-
-def both_pan(fig1,fig2):
-    if fig1 is not None:
-        return fig1,fig1
-    elif fig2 is not None:
-        return fig2,fig2
-    else:
-        return None,None
