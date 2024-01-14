@@ -50,7 +50,7 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     dcc.Input(
-                        id="lookback_id",type="number"
+                        id="lookback_id",type="number",value=10
                     )
                 ])
             )
@@ -60,7 +60,7 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     dcc.Input(
-                        id="prediction_id",type="number"
+                        id="prediction_id",type="number",value=10
                     )
                 ])
             )
@@ -89,12 +89,11 @@ layout=html.Div([
 def moving_average_figure(ticker,lookback,prediction_length_integer):
     company_data=MovingAverage.moving_average_prediction(ticker,lookback,prediction_length_integer)[0]
     prediction_data=MovingAverage.moving_average_prediction(ticker,lookback,prediction_length_integer)[1]
-    company_data=historical_data[ticker]
 
-    figure_moving_average=px.line(company_data,x="Date Date",y=ticker)
+    figure_normal_data=px.line(company_data,x="Date Date",y=ticker)
+    figure_moving_average_data=px.line(prediction_data,x="Date",y="Moving Average List")
+    figure_moving_average=go.Figure(data=figure_normal_data.data+figure_moving_average_data.data)
 
-    return figure_moving_average
-
-
+    return figure_moving_average_data
 
 
